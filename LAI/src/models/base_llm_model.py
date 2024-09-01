@@ -1,6 +1,6 @@
 """Base class for LLM models."""
 from abc import ABC, abstractmethod
-from typing import Callable
+from typing import Any
 
 from src.models.base_tokenizer import Tokenizer
 
@@ -14,7 +14,7 @@ class LLMModel(ABC):
         self.model = self._load_model()
 
     @abstractmethod
-    def _load_model(self) -> Callable:
+    def _load_model(self) -> Any:
         """Load the model."""
         pass
 

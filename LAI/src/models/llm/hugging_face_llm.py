@@ -17,7 +17,7 @@ class HuggingFaceLLM(LLMModel):
 
     def __init__(self, model_name_or_path: str, model_dtype: torch.dtype,
                  quantization_config: BitsAndBytesConfig | None,
-                 *args: Any | tuple[Any, ...], **kwargs: Any | tuple[Any, ...]) -> None:
+                 *args: Any, **kwargs: Any) -> None:
         """
         Initialize the model.
         :param model_name_or_path: HuggingFace model name or path to model.
@@ -37,7 +37,7 @@ class HuggingFaceLLM(LLMModel):
             return "flash_attention_2"
         return "sdpa"
 
-    def _load_model(self):
+    def _load_model(self) -> AutoModelForCausalLM:
         return AutoModelForCausalLM.from_pretrained(
             pretrained_model_name_or_path=self.model_name_or_path, torch_dtype=self.model_dtype,
             quantization_config=self.quantization_config, attn_implementation=self.attention_implementation)

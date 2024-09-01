@@ -1,6 +1,6 @@
 """Base class for tokenizers."""
 from abc import ABC, abstractmethod
-from typing import Callable
+from typing import Any
 
 from torch import Tensor
 
@@ -13,7 +13,7 @@ class Tokenizer(ABC):
         self.tokenizer = self._load_tokenizer()
 
     @abstractmethod
-    def _load_tokenizer(self) -> Callable:
+    def _load_tokenizer(self) -> Any:
         """Load the tokenizer."""
         pass
 
