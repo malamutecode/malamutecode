@@ -25,6 +25,3 @@ class EmbeddingModel(ABC):
     def encode(self, sentence: str) -> Tensor:
         """Encode an image."""
         pass
-
-
-
