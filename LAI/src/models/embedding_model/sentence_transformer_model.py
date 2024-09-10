@@ -2,7 +2,7 @@
 from sentence_transformers import SentenceTransformer
 from torch import Tensor
 
-from models.embedding_model.base_embedding_model import EmbeddingModel
+from models.base_embedding_model import EmbeddingModel
 
 
 class SentenceTransformerModel(EmbeddingModel):
@@ -14,7 +14,7 @@ class SentenceTransformerModel(EmbeddingModel):
 
     def _load_model(self) -> SentenceTransformer:
         """Load the model."""
-        return SentenceTransformer(self.model_name_or_path, device=self.device)
+        return SentenceTransformer(self.model_path, device=self.device)
 
     def encode(self, sentence: str) -> Tensor:
         """Encode a sentence."""

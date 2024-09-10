@@ -7,7 +7,7 @@ from transformers import AutoModelForCausalLM, BitsAndBytesConfig
 from transformers.utils import is_flash_attn_2_available
 
 from models.tokenizer.auto_tokenizer import AutoTokenizerModel
-from src.models.base_llm_model import LLMModel
+from models.base_llm_model import LLMModel
 
 # TODO: Add huggingface_hub auto login function
 

@@ -1,7 +1,7 @@
-"""Test fpr data processing module."""
+"""Test fpr file loaders module."""
 import os
 
-from LAI.src.data.data_processing import PDFDataProcessor
+from LAI.src.data.file_loaders import PDFDataProcessor
 from LAI.src.data.utils.file_downloaders import FileDownloader
 from LAI.test import CACHE_DIR
 

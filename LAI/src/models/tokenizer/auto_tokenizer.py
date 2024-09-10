@@ -4,7 +4,7 @@ from typing import Any
 import torch
 from transformers import AutoTokenizer
 
-from src.models.base_tokenizer import Tokenizer
+from models.base_tokenizer import Tokenizer
 
 
 class AutoTokenizerModel(Tokenizer):

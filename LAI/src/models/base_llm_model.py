@@ -2,7 +2,7 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-from src.models.base_tokenizer import Tokenizer
+from models.base_tokenizer import Tokenizer
 
 
 class LLMModel(ABC):
