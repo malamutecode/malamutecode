@@ -39,13 +39,13 @@ class BaseChromaDB(BaseVectorDB):
 class TempChromaDB(BaseChromaDB):
     """Temporary Chroma DB."""
 
-    def __init__(self, collection_name,
-                 embedding_function: EmbeddingFunction) -> None:
+    def __init__(self, collection_name, embedding_function: EmbeddingFunction) -> None:
         self.chroma_client = chromadb.Client()
         self.collection = self.chroma_client.create_collection(name=collection_name,
                                                                embedding_function=embedding_function)
 
-    def add_to_db(self, documents: list[str], metadatas: list[dict[str, str]], ids: list[str]) -> None:
+    def add_to_db(self, documents: str | list[str], metadatas: dict[str, str] | list[dict[str, str]],
+                  ids: str |list[str]) -> None:
         self.collection.add(documents=documents, metadatas=metadatas, ids=ids)
 
 

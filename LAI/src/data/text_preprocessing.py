@@ -1,8 +1,8 @@
 """Module for text preprocessors."""
 from abc import ABC, abstractmethod
 
-import spacy
 from attr import dataclass
+import spacy
 from tqdm import tqdm
 
 from data.file_loaders import TextPage
@@ -42,11 +42,11 @@ class SpacyNLPTextPreprocessor(BaseTextProcessor):
     """Class for text preprocessing with spacy lib"""
 
     def __init__(self, language: Languages):
-        self.nlp: spacy.language.Language = self._get_nlp_for_language(language)
+        self.nlp = self._get_nlp_for_language(language)
         self._init_sentencizer()
 
     @staticmethod
-    def _get_nlp_for_language(language: Languages):
+    def _get_nlp_for_language(language: Languages) -> spacy.language.Language:
         match language:
             case Languages.polish:
                 from spacy.lang.pl import Polish
