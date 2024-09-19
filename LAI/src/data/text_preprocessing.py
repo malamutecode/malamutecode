@@ -1,5 +1,6 @@
 """Module for text preprocessors."""
 from abc import ABC, abstractmethod
+from collections.abc import Generator
 
 from attr import dataclass
 import spacy
@@ -10,13 +11,14 @@ from data.file_loaders import TextPage
 
 @dataclass
 class Languages:
+    """Languages supported by the text processor."""
 
-    polish='polish'
-    english='english'
+    polish = 'polish'
+    english = 'english'
+
 
 class BaseTextProcessor(ABC):
     """Base class for data processing."""
-
 
     @abstractmethod
     def split_text_on_sentences(self, text: str) -> list[str]:
@@ -27,21 +29,22 @@ class BaseTextProcessor(ABC):
         pass
 
     @staticmethod
-    def get_sentences_chunks(sentences: list[str], chunk_size: int) -> str:
+    def get_sentences_chunks(sentences: list[str], chunk_size: int) -> Generator:
         """
         Joint sentences into text.
-        :param: chunk_size: Number of sentences to join into one paragraph."""
+        :param: chunk_size: Number of sentences to join into one paragraph.
+        """
         for sentence_number in range(0, len(sentences), chunk_size):
             text_paragraph = " ".join(sentences[sentence_number: sentence_number + chunk_size])
             text_paragraph = text_paragraph.replace("  ", " ").strip()
             yield text_paragraph
 
 
-
 class SpacyNLPTextPreprocessor(BaseTextProcessor):
     """Class for text preprocessing with spacy lib"""
 
     def __init__(self, language: Languages):
+        """Initialize the text preprocessor."""
         self.nlp = self._get_nlp_for_language(language)
         self._init_sentencizer()
 
@@ -72,5 +75,3 @@ class SpacyNLPTextPreprocessor(BaseTextProcessor):
 
     def count_sentences_in_text(self, text: str) -> int:
         return len(list(self.nlp(text).sents))
-
-

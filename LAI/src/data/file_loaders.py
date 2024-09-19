@@ -1,8 +1,8 @@
 """Module for processing input txt data."""
 from abc import ABC, abstractmethod
 
-import fitz
 from attr import dataclass
+import fitz
 from tqdm import tqdm
 
 
@@ -27,6 +27,7 @@ class TextPage:
     page_token_count: int = 0
 
     def __post_init__(self):
+        """Calculate page's text statistics."""
         self.page_char_count = len(self.text.split(" "))
         self.page_word_count = len(self.text.split(". "))
         self.page_setence_count_raw = len(self.text.split(". "))
@@ -36,10 +37,9 @@ class TextPage:
 class PDFDataProcessor(BaseDataProcessor):
     """Class to parse PDF data."""
 
-
     @staticmethod
     def text_formatter(text: str) -> str:
-        """Performs minor formatting on text."""
+        """Perform minor formatting on text."""
         cleaned_text = text.replace("\n", " ").strip()
         return cleaned_text
 
