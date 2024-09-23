@@ -6,8 +6,9 @@ from transformers import BitsAndBytesConfig
 
 from apps.base_app import BaseApp
 from data.file_loaders import BaseDataProcessor, PDFDataProcessor, TextPage
-from data.text_preprocessing import BaseTextProcessor, SpacyNLPTextPreprocessor, Languages
-from database.chroma_db import TempChromaDB, SentenceEmbeddingFunction
+from data.text_preprocessing import Languages, SpacyNLPTextPreprocessor
+from database.chroma_db import SentenceEmbeddingFunction, TempChromaDB
+
 from models.base_embedding_model import EmbeddingModel
 from models.base_llm_model import LLMModel
 from models.base_tokenizer import Tokenizer

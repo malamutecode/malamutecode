@@ -1,7 +1,8 @@
 """Test for Chroma DB"""
 import pytest
 
-from database.chroma_db import TempChromaDB, SentenceEmbeddingFunction, BaseChromaDB
+from database.chroma_db import BaseChromaDB, SentenceEmbeddingFunction, TempChromaDB
+
 from models.embedding_model.sentence_transformer_model import SentenceTransformerModel
 
 
@@ -15,6 +16,7 @@ def test_save_embeddings(chroma_db):
     embeddings = [[0.1, 0.2, 0.3], [0.4, 0.5, 0.6]]  # Example embeddings
     ids = ['chunk_1', "chunk_2"]
     chroma_db.save_embedding(documents, embeddings, ids)
+
 
 def test_save_embedding_with_custom_embedding_fn():
     db = TempChromaDB('test', SentenceEmbeddingFunction(SentenceTransformerModel("all-mpnet-base-v2")))

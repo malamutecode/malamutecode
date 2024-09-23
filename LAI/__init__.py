@@ -1,0 +1,1 @@
+"""Lex AI Application."""

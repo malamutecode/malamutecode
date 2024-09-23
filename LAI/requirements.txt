@@ -3,8 +3,10 @@
 --extra-index-url https://download.pytorch.org/whl/cu118
 accelerate==0.33.0
 bitsandbytes==0.43.3
+chromadb==0.5.7
 flake8==4.0.1
 flake8-docstrings==1.6.0
+logger==1.4
 mypy==1.8.0
 numpy==1.26.4
 psutil==6.0.0
