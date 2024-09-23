@@ -1,1 +1,1 @@
-"""Data module."""
+"""Data root module."""
