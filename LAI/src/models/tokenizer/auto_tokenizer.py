@@ -2,7 +2,7 @@
 from typing import Any
 
 import torch
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, BatchEncoding
 
 from models.base_tokenizer import Tokenizer
 
@@ -33,3 +33,21 @@ class AutoTokenizerModel(Tokenizer):
     def decode(self, tokens) -> str:
         """Decode tokens."""
         return self.tokenizer.decode(tokens)
+
+    def pack_prompt(self, input_text: str) -> str:
+        dialogue_template = [
+            {"role": "user",
+             "content": input_text}
+        ]
+
+        # Apply the chat template
+        prompt = self.tokenizer.apply_chat_template(conversation=dialogue_template,
+                                               tokenize=False,
+                                               add_generation_prompt=True)
+        return prompt
+
+    def batch_encode(self, templated_prompt: str) -> BatchEncoding:
+        input_ids = self.tokenizer(templated_prompt, return_tensors="pt").to("cuda")
+        if torch.cuda.is_available():
+            input_ids.to("cuda")
+        return input_ids

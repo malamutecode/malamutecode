@@ -4,6 +4,7 @@ from typing import Any
 import huggingface_hub
 import torch
 from transformers import AutoModelForCausalLM, BitsAndBytesConfig
+from transformers.models.gemma.diff_gemma import GemmaForCausalLM
 from transformers.utils import is_flash_attn_2_available
 
 from models.tokenizer.auto_tokenizer import AutoTokenizerModel
@@ -37,7 +38,7 @@ class HuggingFaceLLM(LLMModel):
             return "flash_attention_2"
         return "sdpa"
 
-    def _load_model(self) -> AutoModelForCausalLM:
+    def _load_model(self) -> GemmaForCausalLM:
         return AutoModelForCausalLM.from_pretrained(
             pretrained_model_name_or_path=self.model_name_or_path, torch_dtype=self.model_dtype,
             quantization_config=self.quantization_config, attn_implementation=self.attention_implementation)
@@ -45,12 +46,22 @@ class HuggingFaceLLM(LLMModel):
     def generate(self, prompt: str, max_length: int = 250) -> str:
         """Generate text."""
         input_ids = self.tokenizer.encode(prompt)
+        model = self._load_model()
+        model.generate()
         output = self.model.generate(input_ids, max_length=max_length)
         return self.tokenizer.decode(output[0])
 
+    def generate_from_packed_prompt(self, packed_prompt: dict):
+        outputs = self.model.generate(**packed_prompt,
+                                     temperature=0.7,
+                                     do_sample=True,
+                                     # whether or not to use sampling, https://huyenchip.com/2024/01/16/sampling.html
+                                     max_new_tokens=512)
+        return outputs
+
 
 if __name__ == "__main__":
-    huggingface_hub.login(token='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')
+    huggingface_hub.login(token='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')
 
     bnb_config = BitsAndBytesConfig(load_in_4bit=True)
     tokenizer = AutoTokenizerModel("google/gemma-2b-it")

@@ -1,5 +1,6 @@
 """Module for text preprocessors."""
 from abc import ABC, abstractmethod
+from venv import logger
 
 from attr import dataclass
 import spacy
@@ -49,8 +50,12 @@ class SpacyNLPTextPreprocessor(BaseTextProcessor):
     def _get_nlp_for_language(language: Languages) -> spacy.language.Language:
         match language:
             case Languages.polish:
-                from spacy.lang.pl import Polish
-                return Polish()
+                try:
+
+                    return spacy.load('pl_core_news_lg')
+                except OSError:
+                    logger.error("Missing model - install with 'python -m spacy download pl_core_news_lg'")
+                    raise
             case Languages.english:
                 from spacy.lang.en import English
                 return English()

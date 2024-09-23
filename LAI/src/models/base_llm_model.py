@@ -2,6 +2,8 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
+from transformers import BatchEncoding
+
 from models.base_tokenizer import Tokenizer
 
 
@@ -21,4 +23,8 @@ class LLMModel(ABC):
     @abstractmethod
     def generate(self, prompt: str, max_length: int = 50) -> str:
         """Generate text."""
+        pass
+
+    @abstractmethod
+    def generate_from_packed_prompt(self, packed_prompt: BatchEncoding):
         pass

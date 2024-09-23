@@ -28,4 +28,3 @@ def test_save_embedding_with_custom_embedding_fn():
         n_results=2
     )
     assert len(results['distances'][0]) == 2
-    db.add_to_db('fdsfsdf', {"source": "my_source"}, 'id0')
