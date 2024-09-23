@@ -14,7 +14,7 @@ class EmbeddingModel(ABC):
         self.model_path = model_path
         self.device = "cuda" if is_available() else "cpu"
         print(f"Using device: {self.device}")
-        self.model = self._load_model()
+        self.model = self._load_model()  # TODO: add batch support
 
     @abstractmethod
     def _load_model(self) -> Callable:
