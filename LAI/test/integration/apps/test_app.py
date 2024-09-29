@@ -4,6 +4,7 @@ import os
 import pytest
 
 from apps.app import AlphaLAI
+from logger import log
 from test import CACHE_DIR
 
 EXAMPLE_SATEMENT_FILENAME_1 = 'example_statement_1.pdf'
@@ -26,4 +27,4 @@ def test_prompt_with_rag(app):
     loaded_file = app.load_file(cached_file_path)
     app.insert_data_to_db(loaded_file, 3)
     response = app.prompt_with_rag("Czy w samochodzie był ktoś pijany")
-    print(response)
+    log.info(response)
