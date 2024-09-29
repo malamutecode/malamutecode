@@ -4,8 +4,7 @@ import pytest
 
 from data.file_loaders import TextPage
 from data.text_preprocessing import Languages, SpacyNLPTextPreprocessor
-from LAI.test.integration.data.conf import (example_sentence_1, example_sentence_2, example_sentence_3,
-                                            example_sentence_4)
+from test.integration.data.conf import example_sentence_1, example_sentence_2, example_sentence_3, example_sentence_4
 
 
 @pytest.fixture

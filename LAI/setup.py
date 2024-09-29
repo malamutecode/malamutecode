@@ -12,4 +12,6 @@ setup(name="MalamuteCode",
       package_dir={
           "": "src",
           "test": "test"
-      })
+      },
+      py_modules=["logger"],
+      )
