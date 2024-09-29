@@ -1,9 +1,9 @@
 """Test fpr file loaders module."""
 import os
 
-from LAI.src.data.file_loaders import PDFDataProcessor
-from LAI.src.data.utils.file_downloaders import FileDownloader
-from LAI.test import CACHE_DIR
+from src.data.file_loaders import PDFDataProcessor
+from src.data.utils.file_downloaders import FileDownloader
+from test import CACHE_DIR
 
 EXAMPLE_SATEMENT_FILENAME_1 = 'example_statement_1.pdf'
 

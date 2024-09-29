@@ -2,7 +2,6 @@
 import pytest
 
 from database.chroma_db import BaseChromaDB, SentenceEmbeddingFunction, TempChromaDB
-
 from models.embedding_model.sentence_transformer_model import SentenceTransformerModel
 
 

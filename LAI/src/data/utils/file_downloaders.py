@@ -1,9 +1,10 @@
 """Module with downloaders of file from web."""
 
 from urllib.parse import quote
-from venv import logger
 
 import requests
+
+from logger import log
 
 
 class FileDownloader:
@@ -15,11 +16,11 @@ class FileDownloader:
         response = requests.get(url)
 
         if response.status_code == 200:
-            logger.info(f"Saving file to {destination_path}")
+            log.info(f"Saving file to {destination_path}")
             with open(destination_path, 'wb') as f:
                 f.write(response.content)
         else:
-            logger.warning(f"URL {url} was not downloaded, status {response.status_code}")
+            log.warning(f"URL {url} was not downloaded, status {response.status_code}")
 
     @staticmethod
     def download_pdf_from_orzeczenia_ms(url: str, destination_path: str) -> None:
@@ -35,7 +36,7 @@ class FileDownloader:
         if response.status_code == 200:
             with open(destination_path, "wb") as file:
                 file.write(response.content)
-            logger.info("File downloaded successfully.")
+            log.info("File downloaded successfully.")
             print(1)
         else:
-            logger.warning("Failed to download the file. Status code:", response.status_code)
+            log.warning("Failed to download the file. Status code:", response.status_code)

@@ -4,10 +4,11 @@ import os
 import pytest
 
 from apps.app import AlphaLAI
-from LAI.test import CACHE_DIR
+from test import CACHE_DIR
 
 EXAMPLE_SATEMENT_FILENAME_1 = 'example_statement_1.pdf'
 cached_file_path = os.path.join(CACHE_DIR, EXAMPLE_SATEMENT_FILENAME_1)
+
 
 @pytest.fixture
 def app():

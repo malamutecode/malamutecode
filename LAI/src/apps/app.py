@@ -1,17 +1,13 @@
 """Implementation of RAG pipeline."""
 import huggingface_hub
 import torch
-from sympy.polys.polyconfig import query
 from transformers import BitsAndBytesConfig
 
 from apps.base_app import BaseApp
 from data.file_loaders import BaseDataProcessor, PDFDataProcessor, TextPage
 from data.text_preprocessing import Languages, SpacyNLPTextPreprocessor
 from database.chroma_db import SentenceEmbeddingFunction, TempChromaDB
-
 from models.base_embedding_model import EmbeddingModel
-from models.base_llm_model import LLMModel
-from models.base_tokenizer import Tokenizer
 from models.embedding_model.sentence_transformer_model import SentenceTransformerModel
 from models.llm.hugging_face_llm import HuggingFaceLLM
 from models.tokenizer.auto_tokenizer import AutoTokenizerModel
@@ -72,7 +68,7 @@ class AlphaLAI(BaseApp):
                                   ids=f"id_{id}")
                 id += 1
 
-    def query_db(self, query: str, number_of_results: int = 3) -> dict[str, list | None]:
+    def query_db(self, query: str, number_of_results: int = 3) -> dict[str, list]:
         results = self.db.collection.query(
             query_texts=[query],
             n_results=number_of_results
@@ -87,18 +83,31 @@ class AlphaLAI(BaseApp):
         Don't return the thinking, only return the answer.
         Make sure your answers are as explanatory as possible.
         Use the following examples as reference for the ideal answer style.
-        \nExample 1:
+        Example 1:
         Query: What are the fat-soluble vitamins?
-        Answer: The fat-soluble vitamins include Vitamin A, Vitamin D, Vitamin E, and Vitamin K. These vitamins are absorbed along with fats in the diet and can be stored in the body's fatty tissue and liver for later use. Vitamin A is important for vision, immune function, and skin health. Vitamin D plays a critical role in calcium absorption and bone health. Vitamin E acts as an antioxidant, protecting cells from damage. Vitamin K is essential for blood clotting and bone metabolism.
-        \nExample 2:
+        Answer: The fat-soluble vitamins include Vitamin A, Vitamin D, Vitamin E, and Vitamin K.
+        These vitamins are absorbed along with fats in the diet and can be stored in the body's fatty tissue and liver
+        for later use. Vitamin A is important for vision, immune function, and skin health. Vitamin D plays a critical
+        role in calcium absorption and bone health. Vitamin E acts as an antioxidant, protecting cells from damage.
+        Vitamin K is essential for blood clotting and bone metabolism.
+        Example 2:
         Query: What are the causes of type 2 diabetes?
-        Answer: Type 2 diabetes is often associated with overnutrition, particularly the overconsumption of calories leading to obesity. Factors include a diet high in refined sugars and saturated fats, which can lead to insulin resistance, a condition where the body's cells do not respond effectively to insulin. Over time, the pancreas cannot produce enough insulin to manage blood sugar levels, resulting in type 2 diabetes. Additionally, excessive caloric intake without sufficient physical activity exacerbates the risk by promoting weight gain and fat accumulation, particularly around the abdomen, further contributing to insulin resistance.
-        \nExample 3:
+        Answer: Type 2 diabetes is often associated with overnutrition, particularly the overconsumption of calories
+        leading to obesity. Factors include a diet high in refined sugars and saturated fats, which can lead to insulin
+        resistance, a condition where the body's cells do not respond effectively to insulin. Over time, the pancreas
+        cannot produce enough insulin to manage blood sugar levels, resulting in type 2 diabetes. Additionally,
+        excessive caloric intake without sufficient physical activity exacerbates the risk by promoting weight
+        gain and fat accumulation, particularly around the abdomen, further contributing to insulin resistance.
+        Example 3:
         Query: What is the importance of hydration for physical performance?
-        Answer: Hydration is crucial for physical performance because water plays key roles in maintaining blood volume, regulating body temperature, and ensuring the transport of nutrients and oxygen to cells. Adequate hydration is essential for optimal muscle function, endurance, and recovery. Dehydration can lead to decreased performance, fatigue, and increased risk of heat-related illnesses, such as heat stroke. Drinking sufficient water before, during, and after exercise helps ensure peak physical performance and recovery.
-        \nNow use the following context items to answer the user query:
+        Answer: Hydration is crucial for physical performance because water plays key roles in maintaining blood volume,
+        regulating body temperature, and ensuring the transport of nutrients and oxygen to cells. Adequate hydration is
+        essential for optimal muscle function, endurance, and recovery. Dehydration can lead to decreased performance,
+        fatigue, and increased risk of heat-related illnesses, such as heat stroke. Drinking sufficient water before,
+        during, and after exercise helps ensure peak physical performance and recovery.
+        Now use the following context items to answer the user query:
         {context}
-        \nRelevant passages: <extract relevant passages from the context here>
+        Relevant passages: <extract relevant passages from the context here>
         User query: {query}
         Answer:"""
         base_prompt = base_prompt.format(context=context,
@@ -116,11 +125,3 @@ class AlphaLAI(BaseApp):
         llm_outputs = model.generate_from_packed_prompt(batch_encoded_prompt)
         output_text = tokenizer.decode(llm_outputs[0])
         return output_text
-
-
-
-
-
-
-
-
