@@ -1,7 +1,6 @@
 """Implementation of RAG pipeline."""
 import huggingface_hub
 import torch
-from sympy.polys.polyconfig import query
 from transformers import BitsAndBytesConfig
 
 from apps.base_app import BaseApp
@@ -10,21 +9,21 @@ from data.text_preprocessing import Languages, SpacyNLPTextPreprocessor
 from database.chroma_db import SentenceEmbeddingFunction, TempChromaDB
 
 from models.base_embedding_model import EmbeddingModel
-from models.base_llm_model import LLMModel
-from models.base_tokenizer import Tokenizer
 from models.embedding_model.sentence_transformer_model import SentenceTransformerModel
 from models.llm.hugging_face_llm import HuggingFaceLLM
-from models.propmpts.prompt_register import prompts
+from models.propmpts import orzeczenia_prompts
+from models.propmpts.prompt_register import get_prompt_registry
 from models.tokenizer.auto_tokenizer import AutoTokenizerModel
-
 
 class AlphaLAI(BaseApp):
     """Implementation of alfa version of LAI app."""
 
-    def __init__(self, language: Languages = Languages.polish):
+    def __init__(self, model_name: str = 'speakleash/Bielik-11B-v2.3-Instruct',
+                 language: Languages = Languages.polish):
         """Init the app."""
         self.language = language
         self.db = self._get_database()
+        self._model_name = model_name
 
     @staticmethod
     def _get_embedding_model_name() -> str:
@@ -46,11 +45,11 @@ class AlphaLAI(BaseApp):
         return SpacyNLPTextPreprocessor(self.language)
 
     def _get_tokenizer(self) -> AutoTokenizerModel:
-        return AutoTokenizerModel("speakleash/Bielik-11B-v2.3-Instruct")
+        return AutoTokenizerModel(self._model_name)
 
     def _get_llm_model(self) -> HuggingFaceLLM:
         huggingface_hub.login(token='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')
-        bnb_config = BitsAndBytesConfig(load_in_4bit=True)
+        bnb_config = BitsAndBytesConfig()
         return HuggingFaceLLM("speakleash/Bielik-11B-v2.3-Instruct",
                               torch.float16, bnb_config, tokenizer=self._get_tokenizer())
 
@@ -84,8 +83,8 @@ class AlphaLAI(BaseApp):
     def prepare_prompt(self, query: str, context_items: list[str]) -> str:
         context = "- " + "\n- ".join([extracted_paragraph for extracted_paragraph in context_items])
 
-
-        base_prompt = prompts['bielik']
+        prompts = get_prompt_registry()
+        base_prompt = prompts[self._model_name][Languages.polish]
         base_prompt = base_prompt.format(context=context,
                                          query=query)
         tokenizer = self._get_tokenizer()
@@ -97,8 +96,11 @@ class AlphaLAI(BaseApp):
         prompt = self.prepare_prompt(query=user_prompt, context_items=db_data['documents'][0])
         tokenizer = self._get_tokenizer()
         batch_encoded_prompt = tokenizer.batch_encode(prompt)
+        print('Loading model...')
         model = self._get_llm_model()
+        print('Generating model response...')
         llm_outputs = model.generate_from_packed_prompt(batch_encoded_prompt)
+        print('Decoding model response...')
         output_text = tokenizer.decode(llm_outputs[0])
         return output_text
 
