@@ -20,6 +20,10 @@ def test_insert_and_query_db_data(app):
     results = app.query_db('prowadził samochod')
     assert 'samochodem' in results['documents'][0][0]
 
+def test_model_in_app(app):
+    output = app.model.generate("Ile jest 2 plus 2?")
+    print(output)
+
 
 def test_prompt_with_rag(app):
     loaded_file = app.load_file(cached_file_path)
