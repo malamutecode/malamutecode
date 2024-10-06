@@ -24,6 +24,7 @@ def prompt_v0_1():
         Answer:"""
     return prompt
 
+@register_prompt(model_name='speakleash/Bielik-11B-v2.3-Instruct-GPTQ', language=Languages.polish)
 @register_prompt(model_name='speakleash/Bielik-11B-v2.3-Instruct', language=Languages.polish)
 def prompt_v1():
     prompt = """
