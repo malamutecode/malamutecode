@@ -1,5 +1,6 @@
 """Module with downloaders of file from web."""
-
+import json
+import os
 from urllib.parse import quote
 
 import requests
@@ -37,6 +38,23 @@ class FileDownloader:
             with open(destination_path, "wb") as file:
                 file.write(response.content)
             log.info("File downloaded successfully.")
-            print(1)
         else:
             log.warning("Failed to download the file. Status code:", response.status_code)
+
+
+class OrzeczeniaDataset:
+    """Class to download files from Orzeczenia dataset."""
+
+    def __init__(self, dataset_path: str) -> None:
+        """Initialize Orzeczenia dataset."""
+        self.dataset_path = dataset_path
+
+    def download_dataset(self, set_name: str, output_directory: str) -> None:
+        """Parse and download .pdf files from dataset."""
+        dataset = json.load(open(self.dataset_path, "r", encoding="utf8"))
+        os.makedirs(output_directory, exist_ok=True)
+        for orzeczenie in dataset[set_name]['orzeczenia']:
+            url = orzeczenie["url"]
+            output_file_name = f"{orzeczenie['id']}.pdf"
+            destination_path = os.path.join(output_directory, output_file_name)
+            FileDownloader.download_pdf_from_orzeczenia_ms(url, destination_path)
