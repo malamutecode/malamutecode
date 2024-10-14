@@ -3,12 +3,13 @@ import os
 
 from src.data.file_loaders import PDFDataProcessor
 from src.data.utils.file_downloaders import FileDownloader
+
 from test import CACHE_DIR
 
 EXAMPLE_SATEMENT_FILENAME_1 = 'example_statement_1.pdf'
 
 
-def test_pdf_parsing():
+def pdf_parsing_test():
     cached_file_path = os.path.join(CACHE_DIR, EXAMPLE_SATEMENT_FILENAME_1)
     if not os.path.exists(cached_file_path):
         os.makedirs(CACHE_DIR, exist_ok=True)
@@ -19,3 +20,7 @@ def test_pdf_parsing():
 
     loaded_pdf = PDFDataProcessor.load_data(cached_file_path)
     assert len(loaded_pdf) == 5
+
+
+if __name__ == '__main__':
+    pdf_parsing_test()
