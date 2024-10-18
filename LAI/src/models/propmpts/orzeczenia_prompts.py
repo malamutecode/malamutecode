@@ -32,19 +32,12 @@ def prompt_v1():
             Wyodrębniając odpowiednie fragmenty z kontekstu przed udzieleniem odpowiedzi na zapytanie. Nie zwracaj myślenia, tylko odpowiedź. Użyj poniższych przykładów jako odniesienia dla idealnego stylu odpowiedzi. 
             
             \nPrzykład 1 
-            Opcja testowa 1
-            Pytanie użytkownika: Kradzież w sklepie - umorzenie sprawy.
-            Odpowiedź: W sprawie sygn. akt II Kp 54/22, sąd rejonowy umorzył postępowanie dotyczące kradzieży sklepowej, uznając, że wartość skradzionego mienia (300 zł) była znikoma, a społeczna szkodliwość czynu była niewielka. Decyzja była oparta na art. 17 § 1 pkt 3 Kodeksu postępowania karnego, który mówi, że postępowanie nie może być prowadzone, jeśli społeczna szkodliwość czynu jest znikoma. W innym przypadku (sygn. akt III Kp 127/21), sąd umorzył postępowanie z uwagi na zawarcie ugody między stronami, gdzie oskarżony naprawił szkodę, a pokrzywdzony wnioskował o umorzenie sprawy.
-            
-            Opcja testowa 2 (usunięte numery spraw)
             Pytanie użytkownika: Kradzież w sklepie - umorzenie sprawy.
             Odpowiedź: W sprawie jednej ze spraw, sąd rejonowy umorzył postępowanie dotyczące kradzieży sklepowej, uznając, że wartość skradzionego mienia (300 zł) była znikoma, a społeczna szkodliwość czynu była niewielka. Decyzja była oparta na art. 17 § 1 pkt 3 Kodeksu postępowania karnego, który mówi, że postępowanie nie może być prowadzone, jeśli społeczna szkodliwość czynu jest znikoma. W innym przypadku, sąd umorzył postępowanie z uwagi na zawarcie ugody między stronami, gdzie oskarżony naprawił szkodę, a pokrzywdzony wnioskował o umorzenie sprawy.
             
             \nPrzykład 2
             Opcja testowa 1
-            Pytanie: Nielegalne wydobywanie kruszcu.
-            Odpowiedź: W sprawie sygn. akt II K 450/18, sąd okręgowy skazał oskarżonego za nielegalne wydobywanie kruszców, zgodnie z art. 181 § 1 Kodeksu karnego, który penalizuje naruszenie zasad ochrony środowiska w zakresie wydobywania surowców naturalnych bez odpowiednich zezwoleń. Oskarżony został skazany na 1 rok pozbawienia wolności w zawieszeniu na 3 lata oraz nałożono na niego obowiązek zapłaty grzywny w wysokości 10 000 zł. W innym orzeczeniu, sygn. akt III K 304/19, sąd orzekł karę 8 miesięcy pozbawienia wolności w zawieszeniu na 2 lata oraz obowiązek naprawienia szkody środowiskowej poprzez przywrócenie terenu do stanu sprzed wydobycia, po stwierdzeniu nielegalnego wydobywania piasku.
-            Opcja testowa 2 (usunięte numery spraw)
+
             Pytanie: Nielegalne wydobywanie kruszcu.
             Odpowiedź: W sprawie jednej ze spraw, sąd okręgowy skazał oskarżonego za nielegalne wydobywanie kruszców, zgodnie z art. 181 § 1 Kodeksu karnego, który penalizuje naruszenie zasad ochrony środowiska w zakresie wydobywania surowców naturalnych bez odpowiednich zezwoleń. Oskarżony został skazany na 1 rok pozbawienia wolności w zawieszeniu na 3 lata oraz nałożono na niego obowiązek zapłaty grzywny w wysokości 10 000 zł. W innym orzeczeniu, sąd orzekł karę 8 miesięcy pozbawienia wolności w zawieszeniu na 2 lata oraz obowiązek naprawienia szkody środowiskowej poprzez przywrócenie terenu do stanu sprzed wydobycia, po stwierdzeniu nielegalnego wydobywania piasku.
             
