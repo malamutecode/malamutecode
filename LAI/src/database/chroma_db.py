@@ -1,14 +1,14 @@
 """Chroma DB module."""
 import os
 from typing import Mapping, Sequence
-from venv import logger
 
 import chromadb
 from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
 
-from database.base_database import BaseVectorDB
 from src import CACHE_DIR
 
+from database.base_database import BaseVectorDB
+from logger import log
 from models.base_embedding_model import EmbeddingModel
 
 CHROMA_PATH = os.path.join(CACHE_DIR, 'chroma')
@@ -32,9 +32,9 @@ class BaseChromaDB(BaseVectorDB):
         """
         try:
             self.collection.add(documents=text_data, embeddings=embeddings, ids=ids)
-            logger.info("Embeddings saved successfully.")
+            log.info("Embeddings saved successfully.")
         except Exception as e:
-            logger.error(f"An error occurred: {e}")
+            log.error(f"An error occurred: {e}")
             raise e
 
 

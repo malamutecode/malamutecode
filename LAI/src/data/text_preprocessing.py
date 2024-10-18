@@ -1,6 +1,5 @@
 """Module for text preprocessors."""
 from abc import ABC, abstractmethod
-from venv import logger
 from collections.abc import Generator
 
 from attr import dataclass
@@ -8,6 +7,7 @@ import spacy
 from tqdm import tqdm
 
 from data.file_loaders import TextPage
+from logger import log
 
 
 @dataclass
@@ -57,7 +57,7 @@ class SpacyNLPTextPreprocessor(BaseTextProcessor):
 
                     return spacy.load('pl_core_news_lg')
                 except OSError:
-                    logger.error("Missing model - install with 'python -m spacy download pl_core_news_lg'")
+                    log.error("Missing model - install with 'python -m spacy download pl_core_news_lg'")
                     raise
             case Languages.english:
                 from spacy.lang.en import English
