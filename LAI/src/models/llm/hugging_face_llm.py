@@ -39,15 +39,18 @@ class HuggingFaceLLM(LLMModel):
         return "sdpa"
 
     def _load_model(self) -> GemmaForCausalLM:
+        device_map = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        additional_config: dict = {}
+        if self.quantization_config is not None:
+            additional_config['quantization_config'] = self.quantization_config
         return AutoModelForCausalLM.from_pretrained(
-            pretrained_model_name_or_path=self.model_name_or_path, torch_dtype=self.model_dtype,
-            quantization_config=self.quantization_config, attn_implementation=self.attention_implementation)
+            pretrained_model_name_or_path=self.model_name_or_path, attn_implementation=self.attention_implementation,
+            device_map=device_map, **additional_config)
 
     def generate(self, prompt: str, max_length: int = 250) -> str:
         """Generate text."""
         input_ids = self.tokenizer.encode(prompt)
-        model = self._load_model()
-        model.generate()
+        self.model.generate()
         output = self.model.generate(input_ids, max_length=max_length)
         return self.tokenizer.decode(output[0])
 

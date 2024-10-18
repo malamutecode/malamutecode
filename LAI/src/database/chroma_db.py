@@ -5,13 +5,9 @@ from typing import Mapping, Sequence
 import chromadb
 from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
 
-from src import CACHE_DIR
-
-from database.base_database import BaseVectorDB
 from logger import log
+from database.base_database import BaseVectorDB
 from models.base_embedding_model import EmbeddingModel
-
-CHROMA_PATH = os.path.join(CACHE_DIR, 'chroma')
 
 
 class BaseChromaDB(BaseVectorDB):
