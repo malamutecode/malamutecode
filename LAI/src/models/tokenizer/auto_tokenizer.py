@@ -43,8 +43,8 @@ class AutoTokenizerModel(Tokenizer):
 
         # Apply the chat template
         prompt = self.tokenizer.apply_chat_template(conversation=dialogue_template,
-                                               tokenize=False,
-                                               add_generation_prompt=True)
+                                                    tokenize=False,
+                                                    add_generation_prompt=True)
         return prompt
 
     def batch_encode(self, templated_prompt: str) -> BatchEncoding:

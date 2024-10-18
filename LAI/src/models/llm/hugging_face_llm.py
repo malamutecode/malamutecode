@@ -56,10 +56,9 @@ class HuggingFaceLLM(LLMModel):
 
     def generate_from_packed_prompt(self, packed_prompt: dict):
         outputs = self.model.generate(**packed_prompt,
-                                     temperature=0.7,
-                                     do_sample=True,
-                                     # whether or not to use sampling, https://huyenchip.com/2024/01/16/sampling.html
-                                     max_new_tokens=512)
+                                      temperature=0.7,
+                                      do_sample=True,  # Sampling: https://huyenchip.com/2024/01/16/sampling.html
+                                      max_new_tokens=512)
         return outputs
 
 

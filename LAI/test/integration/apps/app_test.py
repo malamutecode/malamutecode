@@ -1,20 +1,19 @@
 """Unit test for LAI apps."""
 import os
 
-import pytest
-
 from apps.app import AlphaLAI
-from LAI.test import CACHE_DIR
+from logger import log
+from test import CACHE_DIR
 
 EXAMPLE_SATEMENT_FILENAME_1 = 'example_statement_1.pdf'
 cached_file_path = os.path.join(CACHE_DIR, EXAMPLE_SATEMENT_FILENAME_1)
 
-@pytest.fixture
-def app():
+
+def get_app():
     return AlphaLAI()
 
 
-def test_insert_and_query_db_data(app):
+def insert_and_query_db_data_test(app: AlphaLAI) -> None:
     loaded_file = app.load_file(cached_file_path)
     app.insert_data_to_db(loaded_file, 3)
     results = app.query_db('prowadził samochod')
@@ -25,8 +24,13 @@ def test_model_in_app(app):
     print(output)
 
 
-def test_prompt_with_rag(app):
+def prompt_with_rag_test(app: AlphaLAI) -> None:
     loaded_file = app.load_file(cached_file_path)
     app.insert_data_to_db(loaded_file, 3)
     response = app.prompt_with_rag("Czy w samochodzie był ktoś pijany")
-    print(response)
+    log.info(response)
+
+
+if __name__ == '__main__':
+    insert_and_query_db_data_test(get_app())
+    prompt_with_rag_test(get_app())

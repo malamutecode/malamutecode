@@ -9,7 +9,6 @@ from apps.base_app import BaseApp
 from data.file_loaders import BaseDataProcessor, PDFDataProcessor, TextPage
 from data.text_preprocessing import Languages, SpacyNLPTextPreprocessor
 from database.chroma_db import SentenceEmbeddingFunction, TempChromaDB
-
 from models.base_embedding_model import EmbeddingModel
 from models.base_tokenizer import Tokenizer
 from models.embedding_model.sentence_transformer_model import SentenceTransformerModel
@@ -88,7 +87,7 @@ class AlphaLAI(BaseApp):
                                   ids=f"id_{id}")
                 id += 1
 
-    def query_db(self, query: str, number_of_results: int = 3) -> dict[str, list | None]:
+    def query_db(self, query: str, number_of_results: int = 3) -> dict[str, list]:
         results = self.db.collection.query(
             query_texts=[query],
             n_results=number_of_results
