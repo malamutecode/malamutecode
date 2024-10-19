@@ -19,7 +19,8 @@ def insert_and_query_db_data_test(app: AlphaLAI) -> None:
     results = app.query_db('prowadził samochod')
     assert 'samochodem' in results['documents'][0][0]
 
-def test_model_in_app(app):
+
+def model_in_app_test(app):
     output = app.model.generate("Ile jest 2 plus 2?")
     print(output)
 
@@ -34,3 +35,4 @@ def prompt_with_rag_test(app: AlphaLAI) -> None:
 if __name__ == '__main__':
     insert_and_query_db_data_test(get_app())
     prompt_with_rag_test(get_app())
+    model_in_app_test(get_app())

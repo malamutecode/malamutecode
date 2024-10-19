@@ -3,7 +3,8 @@ from collections import defaultdict
 
 from data.text_preprocessing import Languages
 
-registry = defaultdict(dict)
+registry: defaultdict = defaultdict(dict)
+
 
 def register_prompt(model_name: str, language: Languages):
     def decorator(func):
@@ -11,5 +12,6 @@ def register_prompt(model_name: str, language: Languages):
         return func
     return decorator
 
-def get_prompt_registry():
+
+def get_prompt_registry() -> defaultdict:
     return registry

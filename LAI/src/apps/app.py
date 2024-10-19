@@ -13,7 +13,6 @@ from models.base_embedding_model import EmbeddingModel
 from models.base_tokenizer import Tokenizer
 from models.embedding_model.sentence_transformer_model import SentenceTransformerModel
 from models.llm.hugging_face_llm import HuggingFaceLLM
-from models.propmpts import orzeczenia_prompts
 from models.propmpts.prompt_register import get_prompt_registry
 from models.tokenizer.auto_tokenizer import AutoTokenizerModel
 
@@ -27,7 +26,7 @@ class AppConfig:
     model_name: str = "speakleash/Bielik-11B-v2.3-Instruct-GPTQ"
     model_bnb_config: BitsAndBytesConfig | None = None
     model_dtype: torch.dtype | None = None
-    model_device: str = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model_device: torch.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
 class AlphaLAI(BaseApp):
@@ -105,7 +104,6 @@ class AlphaLAI(BaseApp):
         packed_prompt = tokenizer.pack_prompt(base_prompt)
         return packed_prompt
 
-
     def prompt_with_rag(self, user_prompt: str) -> str:
         db_data = self.query_db(user_prompt)
         prompt = self.prepare_prompt(query=user_prompt, context_items=db_data['documents'][0])
@@ -117,11 +115,3 @@ class AlphaLAI(BaseApp):
         print('Decoding model response...')
         output_text = tokenizer.decode(llm_outputs[0])
         return output_text
-
-
-
-
-
-
-
-

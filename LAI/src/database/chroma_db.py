@@ -5,8 +5,8 @@ from typing import Mapping, Sequence
 import chromadb
 from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
 
-from logger import log
 from database.base_database import BaseVectorDB
+from logger import log
 from models.base_embedding_model import EmbeddingModel
 
 
