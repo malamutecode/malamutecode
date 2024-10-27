@@ -21,7 +21,8 @@ class AutoTokenizerModel(Tokenizer):
 
     def _load_tokenizer(self) -> AutoTokenizer:
         """Load the tokenizer."""
-        return AutoTokenizer.from_pretrained(self.model_name_or_path)
+        device_map = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        return AutoTokenizer.from_pretrained(self.model_name_or_path, device_map=device_map)
 
     def encode(self, sentence: str) -> Any:
         """Encode a sentence."""
